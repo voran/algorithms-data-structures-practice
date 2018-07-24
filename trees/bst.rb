@@ -39,6 +39,11 @@ class Tree
     array
   end
 
+  def nth_largest(n)
+    @visited_count = 0
+    get_nth_largest(@root, n)
+  end
+
   private
   def do_insert(node, element)
     if !node
@@ -70,5 +75,18 @@ class Tree
     traverse_in_order(node.left, array)
     array.push node.key
     traverse_in_order(node.right, array)
+  end
+
+  def get_nth_largest(node, n)
+    if node.right && value = get_nth_largest(node.right, n)
+      return value
+    end
+
+    @visited_count += 1
+    return node.key if @visited_count == n
+
+    if node.left && value = get_nth_largest(node.left, n)
+      return value
+    end
   end
 end
