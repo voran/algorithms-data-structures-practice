@@ -36,10 +36,12 @@ def knapsack_memo(w, w_arr, v_arr, n, memo = {})
   return 0 if (w == 0 || n == 0)
 
   memo[n] ||= {}
-  memo[n][w] ||= if (w_arr[n - 1] > w)
-    knapsack(w, w_arr, v_arr, n - 1, memo)
-  else
-    [v_arr[n - 1] + knapsack(w - w_arr[n - 1], w_arr, v_arr, n - 1, memo), knapsack(w, w_arr, v_arr, n - 1, memo)].max
+  if memo[n][w].nil?
+    memo[n][w] = if (w_arr[n - 1] > w)
+      knapsack_memo(w, w_arr, v_arr, n - 1, memo)
+    else
+      [v_arr[n - 1] + knapsack_memo(w - w_arr[n - 1], w_arr, v_arr, n - 1, memo), knapsack_memo(w, w_arr, v_arr, n - 1, memo)].max
+    end
   end
   memo[n][w]
 end
