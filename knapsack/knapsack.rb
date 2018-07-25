@@ -1,3 +1,9 @@
+=begin
+knapsack - naive implementation
+time complexity: O(nlogn) worst O(nlogn)
+space complexity: O(n)
+
+=end
 def knapsack(w, w_arr, v_arr, n)
   return 0 if (w == 0 || n == 0)
 
