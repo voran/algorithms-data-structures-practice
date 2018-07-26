@@ -23,9 +23,11 @@ class MaxHeap
   end
 
   def pop
-    first = @heap[1]
-    @heap[1] = @heap.delete_at(-1)
-    heapify_down(1)
+    first = @heap.delete_at(1)
+    unless @heap.length < 3 # since it's 1-indexed
+      @heap.insert(1, @heap.delete_at(-1))
+      heapify_down(1)
+    end
     return first
   end
 
@@ -33,7 +35,7 @@ class MaxHeap
   def heapify_down(index)
     left_index = index * 2
     right_index = index * 2 + 1
-    if ((left_index <= @heap.length && @heap[index] < @heap[left_index]) || (right_index <= @heap.length && @heap[index] < @heap[right_index]))
+    if ((!@heap[left_index].nil? && @heap[index] < @heap[left_index]) || (!@heap[right_index].nil? && @heap[index] < @heap[right_index]))
       to_swap_value = [@heap[left_index], @heap[right_index]].compact.max
       to_swap_index = [left_index, right_index].find {|i| @heap[i] == to_swap_value}
       tmp = @heap[index]
